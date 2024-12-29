@@ -1,7 +1,7 @@
 #pragma once
 #include <cassert>
 #include <string>
-
+#include <iostream>
 
 #include "consts.h"
 
@@ -14,7 +14,8 @@ class Order {
         int quantity;
         OrderDirection direction;
 
-        Order(double p, int q, OrderDirection d) : price(p), quantity(q), direction(d) {
+        Order(string s, double p, int q, OrderDirection d) : stock_name(s), price(p), quantity(q), direction(d) {
+            cout << "creating order" << endl;
             assert(q == ORDER_SIZE);
         }
 };

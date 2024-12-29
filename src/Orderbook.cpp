@@ -5,17 +5,23 @@
 #include <cassert>
 
 #include "Order.h"
-#include "Orderbook.h"
+#include "OrderBook.h"
+#include <limits>
 
 using namespace std;
 
-Orderbook::Orderbook(string name) {
+OrderBook::OrderBook(string name) {
+    cout << "creating orderbook for stock " << name << endl;
     stock_name = name;
+    best_bid = numeric_limits<double>::epsilon();
+    best_ask = numeric_limits<double>::max();
+    cout << "best bid, best ask " << best_bid << ", " << best_ask << endl;
 };
 
-void Orderbook::add_entry(Order O) {
+void OrderBook::add_entry(Order O) {
     // TODO make sure it's fine according to the min increment
     // TODO allow partial fills
+    cout << "adding entry" << endl;
     assert(O.quantity == ORDER_SIZE);
 
     bool is_best_bid = O.direction == OrderDirection::BUY && O.price > best_bid;
@@ -45,18 +51,20 @@ void Orderbook::add_entry(Order O) {
 
     // Add to map
     // TODO turn this get map to use into a method
-    map<double, int>& map_to_use_ref = O.direction == OrderDirection::BUY ? bid_quantities : ask_quantities;
+    map<double, int>& map_to_use_ref = O.direction == OrderDirection::BUY ? 
+                                        bid_quantities : 
+                                        ask_quantities;
     if (map_to_use_ref.find(O.price) != map_to_use_ref.end()) {
-        map_to_use_ref[O.price] += O.quantity;
+        map_to_use_ref.at(O.price) += O.quantity;
     } else {
-        map_to_use_ref[O.price] = O.quantity;
+        map_to_use_ref.insert({O.price, O.quantity});
     }
 
-    assert(bid_quantities[best_bid] > 0);
-    assert(ask_quantities[best_ask] > 0);
+    assert(bid_quantities.size() == 0 || bid_quantities.at(best_bid) > 0);
+    assert(ask_quantities.size() == 0 || ask_quantities.at(best_ask) > 0);
 };
 
-double Orderbook::match(Order O) {
+double OrderBook::match(Order O) {
     assert(O.quantity == ORDER_SIZE);
     map<double, int>& map_to_use_ref = O.direction == OrderDirection::BUY ? bid_quantities : ask_quantities;
 

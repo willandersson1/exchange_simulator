@@ -7,9 +7,9 @@
 
 #include "Order.h"
 
-class Orderbook {
+class OrderBook {
     public:
-        Orderbook(string name);
+        OrderBook(string name);
 
         string stock_name;
         map<double, int> bid_quantities;
