@@ -6,6 +6,7 @@
 
 #include "Order.h"
 #include "OrderBook.h"
+#include "OrderBookEntry.h"
 #include <limits>
 
 using namespace std;
@@ -27,11 +28,11 @@ void OrderBook::add_entry(Order O) {
     bool should_match = (is_best_bid && O.price >= best_ask) || (is_best_ask && O.price <= best_bid);
     
     // Check that there is actually something in the book
-    if (O.direction == OrderDirection::BUY && ask_quantities.size() == 0) {
+    if (O.direction == OrderDirection::BUY && sell_entries.size() == 0) {
         should_match = false; 
     }
 
-    if (O.direction == OrderDirection::SELL && bid_quantities.size() == 0) {
+    if (O.direction == OrderDirection::SELL && buy_entries.size() == 0) {
         should_match = false; 
     }
     
@@ -49,25 +50,27 @@ void OrderBook::add_entry(Order O) {
 
     // Add to map
     // TODO turn this get map to use into a method
-    map<double, int>& map_to_use_ref = O.direction == OrderDirection::BUY ? 
-                                        bid_quantities : 
-                                        ask_quantities;
+    map<double, OrderBookEntry>& map_to_use_ref = O.direction == OrderDirection::BUY ? 
+                                        buy_entries : 
+                                        sell_entries;
     if (map_to_use_ref.find(O.price) != map_to_use_ref.end()) {
-        map_to_use_ref.at(O.price) += O.quantity;
+        map_to_use_ref.at(O.price).add_order(O);
     } else {
-        map_to_use_ref.insert({O.price, O.quantity});
+        OrderBookEntry newEntry;
+        newEntry.add_order(O);
+        map_to_use_ref.insert({O.price, newEntry});
     }
 
-    assert(bid_quantities.size() == 0 || bid_quantities.at(best_bid) > 0);
-    assert(ask_quantities.size() == 0 || ask_quantities.at(best_ask) > 0);
+    assert(buy_entries.size() == 0 || buy_entries.at(best_bid).total_qty > 0);
+    assert(sell_entries.size() == 0 || sell_entries.at(best_ask).total_qty > 0);
     displayBook();
 };
 
 double OrderBook::match(Order O) {
     assert(O.quantity == ORDER_SIZE);
-    map<double, int>& map_to_use_ref = O.direction == OrderDirection::BUY ? 
-                                                        ask_quantities : 
-                                                        bid_quantities;
+    map<double, OrderBookEntry>& map_to_use_ref = O.direction == OrderDirection::BUY ? 
+                                                        sell_entries : 
+                                                        buy_entries;
 
 
     // Because we don't allow partial filling (for now), 
@@ -96,15 +99,18 @@ void OrderBook::displayBook() {
     cout << "Best ask: " << best_ask << endl;
     cout << endl;
 
-    for (auto iter = ask_quantities.rbegin(); iter != ask_quantities.rend(); iter++) {
+    for (auto iter = sell_entries.rbegin(); iter != sell_entries.rend(); iter++) {
         double price = iter -> first;
-        int qty = iter -> second;
-        cout << price << " | " << qty << endl;
+        int qty = iter -> second.total_qty;
+        int n_entries = iter -> second.entries.size();
+        cout << price << " | " << qty << " (" << n_entries << " order(s))" << endl;
     }
     cout << "-----" << endl;
-    for (auto iter = bid_quantities.rbegin(); iter != bid_quantities.rend(); iter++) {
+    for (auto iter = buy_entries.rbegin(); iter != buy_entries.rend(); iter++) {
         double price = iter -> first;
-        int qty = iter -> second;
-        cout << price << " | " << qty << endl;
+        auto snd = iter -> second;
+        int qty = iter -> second.total_qty;
+        int n_entries = iter -> second.entries.size();
+        cout << price << " | " << qty << " (" << n_entries << " order(s))" << endl;
     }
 }

@@ -6,6 +6,7 @@
 #include <cassert>
 
 #include "Order.h"
+#include "OrderBookEntry.h"
 #include <vector>
 
 class OrderBook {
@@ -13,8 +14,8 @@ class OrderBook {
         OrderBook(string name);
 
         string stock_name;
-        map<double, int> bid_quantities;
-        map<double, int> ask_quantities;
+        map<double, OrderBookEntry> buy_entries;
+        map<double, OrderBookEntry> sell_entries;
 
         double best_bid;
         double best_ask;
