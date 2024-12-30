@@ -6,6 +6,7 @@
 #include <cassert>
 
 #include "Order.h"
+#include <vector>
 
 class OrderBook {
     public:
@@ -18,8 +19,8 @@ class OrderBook {
         double best_bid;
         double best_ask;
 
-        // TODO should actually return a matching (# buys matched, # asks matched)
         void add_entry(Order O);
         double match(Order O);
+        void displayBook();
 };
 

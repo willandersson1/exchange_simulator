@@ -10,7 +10,12 @@ using namespace std;
 
 int main() {
     string stockName = "STOCK";
-    Order myOrder(stockName, 100, ORDER_SIZE, OrderDirection::BUY);
+    string clientName = "client";
     Exchange exch;
-    exch.place_order("me", myOrder);
+    exch.place_order(Order(clientName, stockName, 100, ORDER_SIZE, OrderDirection::BUY));
+    exch.place_order(Order(clientName, stockName, 90, ORDER_SIZE, OrderDirection::BUY));
+    exch.place_order(Order(clientName, stockName, 110, ORDER_SIZE, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 120, ORDER_SIZE, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 100, ORDER_SIZE, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 200, ORDER_SIZE, OrderDirection::BUY));
 }
