@@ -15,6 +15,7 @@ class Order {
         OrderDirection direction;
         string client_id;
 
+        Order() : direction(OrderDirection::BUY) {};
         Order(string cid, string s, double p, int q, OrderDirection d);
         string order_to_string();
 };

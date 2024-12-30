@@ -18,4 +18,6 @@ int main() {
     exch.place_order(Order(clientName, stockName, 120, ORDER_SIZE, OrderDirection::SELL));
     exch.place_order(Order(clientName, stockName, 100, ORDER_SIZE, OrderDirection::SELL));
     exch.place_order(Order(clientName, stockName, 200, ORDER_SIZE, OrderDirection::BUY));
+    exch.place_order(Order(clientName, stockName, 300, ORDER_SIZE, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 300, ORDER_SIZE, OrderDirection::SELL));
 }

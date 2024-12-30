@@ -21,7 +21,7 @@ class OrderBook {
         double best_ask;
 
         void add_entry(Order O);
-        double match(Order O);
+        void match(Order O);
         void displayBook();
 };
 

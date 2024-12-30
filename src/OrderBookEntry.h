@@ -9,5 +9,8 @@ class OrderBookEntry {
         list<Order> entries;
 
         OrderBookEntry() : total_qty(0) {};
-        void add_order(Order O);
+        void addOrder(Order O);
+        Order getFront();
+        void removeFront();
+        int size();
 };
