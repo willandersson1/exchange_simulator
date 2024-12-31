@@ -12,12 +12,7 @@ int main() {
     string stockName = "STOCK";
     string clientName = "client";
     Exchange exch;
-    exch.place_order(Order(clientName, stockName, 100, ORDER_SIZE, OrderDirection::BUY));
-    exch.place_order(Order(clientName, stockName, 90, ORDER_SIZE, OrderDirection::BUY));
-    exch.place_order(Order(clientName, stockName, 110, ORDER_SIZE, OrderDirection::SELL));
-    exch.place_order(Order(clientName, stockName, 120, ORDER_SIZE, OrderDirection::SELL));
-    exch.place_order(Order(clientName, stockName, 100, ORDER_SIZE, OrderDirection::SELL));
-    exch.place_order(Order(clientName, stockName, 200, ORDER_SIZE, OrderDirection::BUY));
-    exch.place_order(Order(clientName, stockName, 300, ORDER_SIZE, OrderDirection::SELL));
-    exch.place_order(Order(clientName, stockName, 300, ORDER_SIZE, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 90, 10, OrderDirection::SELL));
+    exch.place_order(Order(clientName, stockName, 100, 15, OrderDirection::BUY));
+    exch.place_order(Order(clientName, stockName, 80, 5, OrderDirection::SELL));
 }

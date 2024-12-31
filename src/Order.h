@@ -13,6 +13,7 @@ class Order {
         double price;
         int quantity;
         OrderDirection direction;
+        int remaining_quantity;
         string client_id;
 
         Order() : direction(OrderDirection::BUY) {};

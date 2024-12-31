@@ -20,8 +20,10 @@ class OrderBook {
         double best_bid;
         double best_ask;
 
-        void add_entry(Order O);
-        void match(Order O);
+        void add_entry(Order& O);
+        void match(Order& O);
         void displayBook();
+        void partialFillMatch(Order& O);
+        void partialFillMatchSell(Order& O);
 };
 
