@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include <cassert>
+#include <limits>
 
 #include "Order.h"
 #include "OrderBookEntry.h"
@@ -11,7 +12,7 @@
 
 class OrderBook {
     public:
-        OrderBook(string name);
+        OrderBook(string name) : stock_name(name), best_bid(LOWEST_BID), best_ask(HIGHEST_ASK) {};
 
         string stock_name;
         map<double, OrderBookEntry> buy_entries;
@@ -20,10 +21,15 @@ class OrderBook {
         double best_bid;
         double best_ask;
 
-        void add_entry(Order& O);
-        void match(Order& O);
+        void submitOrder(Order& O);
         void displayBook();
-        void partialFillMatch(Order& O);
-        void partialFillMatchSell(Order& O);
+    private:
+        static constexpr double LOWEST_BID = 1;
+        static constexpr double HIGHEST_ASK = numeric_limits<int>::max();
+        void updateBestBidAskFromOrder(Order& O);
+        bool shouldContinueMatching(Order& O);
+        void addEntry(Order& O);
+        void removeBestBidEntry();
+        void removeBestAskEntry();
 };
 
