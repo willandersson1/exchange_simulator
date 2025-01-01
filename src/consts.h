@@ -4,10 +4,10 @@
 
 using namespace std;
 
-inline double MAX_PRICE = 50;
-inline int ORDER_SIZE = 10;
+constexpr double MAX_PRICE = 50;
+constexpr int ORDER_SIZE = 10;
 
-enum OrderDirection {
+enum class OrderDirection {
     BUY,
     SELL
 };
