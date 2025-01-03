@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// TODO cmake
+// TODO linting
 int main() {
     string stockName = "STOCK";
     string clientName = "client";

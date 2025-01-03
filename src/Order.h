@@ -10,13 +10,13 @@ class Order {
         static int global_count;
         int time;
         string stock_name;
-        double price;
+        Price price;
         int quantity;
         OrderDirection direction;
         int remaining_quantity;
         string client_id;
 
         Order() : direction(OrderDirection::BUY) {};
-        Order(string cid, string s, double p, int q, OrderDirection d);
+        Order(string cid, string s, Price p, int q, OrderDirection d);
         string order_to_string();
 };

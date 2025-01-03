@@ -8,6 +8,7 @@
 
 #include "Order.h"
 #include "OrderBookEntry.h"
+#include "consts.h"
 #include <vector>
 
 class OrderBook {
@@ -15,17 +16,17 @@ class OrderBook {
         OrderBook(string name) : stock_name(name), best_bid(LOWEST_BID), best_ask(HIGHEST_ASK) {};
 
         string stock_name;
-        map<double, OrderBookEntry> buy_entries;
-        map<double, OrderBookEntry> sell_entries;
+        map<Price, OrderBookEntry> buy_entries;
+        map<Price, OrderBookEntry> sell_entries;
 
-        double best_bid;
-        double best_ask;
+        Price best_bid;
+        Price best_ask;
 
         void submitOrder(Order& O);
         void displayBook();
     private:
-        static constexpr double LOWEST_BID = 1;
-        static constexpr double HIGHEST_ASK = numeric_limits<int>::max();
+        static constexpr Price LOWEST_BID = 1;
+        static constexpr Price HIGHEST_ASK = numeric_limits<int>::max();
         void updateBestBidAskFromOrder(Order& O);
         bool shouldContinueMatching(Order& O);
         void addEntry(Order& O);

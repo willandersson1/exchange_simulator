@@ -16,7 +16,7 @@ string Order::order_to_string() {
     return ss.str();
 }
 
-Order::Order(string cid, string s, double p, int q, OrderDirection d) 
+Order::Order(string cid, string s, Price p, int q, OrderDirection d) 
         : time(++Order::global_count), client_id(cid), stock_name(s), price(p), quantity(q), direction(d), remaining_quantity(q) {
     cout << order_to_string() << endl;
 }

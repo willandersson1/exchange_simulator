@@ -23,11 +23,3 @@ void OrderBookEntry::removeFront() {
 int OrderBookEntry::size() {
     return entries.size();
 }
-
-void OrderBookEntry::changeFrontQuantity(int qty) {
-    assert(false);
-    // assert(qty > 0);
-    // total_qty -= getFront().quantity;
-    // getFront().quantity = qty;
-    // total_qty += qty;
-}

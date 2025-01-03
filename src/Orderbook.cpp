@@ -6,6 +6,7 @@
 #include "Order.h"
 #include "OrderBook.h"
 #include "OrderBookEntry.h"
+#include "consts.h"
 
 using namespace std;
 
@@ -14,12 +15,12 @@ void OrderBook::submitOrder(Order& O) {
     // TODO output or communicate the matched orders
     vector<Order> ordersFullyMatched;
     bool isBuy = O.direction == OrderDirection::BUY;
-    map<double, OrderBookEntry>& entriesToUse = isBuy ? 
+    map<Price, OrderBookEntry>& entriesToUse = isBuy ? 
                                     sell_entries : 
                                     buy_entries;
 
     while (shouldContinueMatching(O)) {
-        double bestBidOrAsk = isBuy ? best_ask : best_bid;
+        Price bestBidOrAsk = isBuy ? best_ask : best_bid;
         OrderBookEntry& entryMatchingTo = entriesToUse.at(bestBidOrAsk);
         Order& orderMatchingTo = entryMatchingTo.getFront();
         int quantityToMatch = min(O.remaining_quantity, orderMatchingTo.remaining_quantity);
@@ -63,7 +64,7 @@ bool OrderBook::shouldContinueMatching(Order& O) {
 }
 
 void OrderBook::addEntry(Order& O) {
-    map<double, OrderBookEntry>& entriesAddingTo = O.direction == OrderDirection::BUY ? 
+    map<Price, OrderBookEntry>& entriesAddingTo = O.direction == OrderDirection::BUY ? 
                                                     buy_entries :
                                                     sell_entries;
     if (entriesAddingTo.find(O.price) != entriesAddingTo.end()) {
@@ -104,14 +105,14 @@ void OrderBook::displayBook() {
     cout << endl;
 
     for (auto iter = sell_entries.rbegin(); iter != sell_entries.rend(); iter++) {
-        double price = iter -> first;
+        Price price = iter -> first;
         int qty = iter -> second.total_qty;
         int n_entries = iter -> second.size();
         cout << price << " | " << qty << " (" << n_entries << " order(s))" << endl;
     }
     cout << "-----" << endl;
     for (auto iter = buy_entries.rbegin(); iter != buy_entries.rend(); iter++) {
-        double price = iter -> first;
+        Price price = iter -> first;
         auto snd = iter -> second;
         int qty = iter -> second.total_qty;
         int n_entries = iter -> second.size();
