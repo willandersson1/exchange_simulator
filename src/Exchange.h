@@ -6,9 +6,11 @@
 #include "OrderBook.h"
 #include <vector>
 
-class Exchange {
-    public: 
-        void place_order(Order O);
-    private:
-        unordered_map<string, OrderBook> orderbooks;
+class Exchange
+{
+public:
+    void place_order(Order O);
+
+private:
+    unordered_map<string, OrderBook> orderbooks;
 };

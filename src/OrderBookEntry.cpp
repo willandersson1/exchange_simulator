@@ -2,8 +2,10 @@
 #include "Order.h"
 #include <cassert>
 
-void OrderBookEntry::addOrder(Order& O) {
-    if (entries.size() > 0) {
+void OrderBookEntry::addOrder(Order &O)
+{
+    if (entries.size() > 0)
+    {
         assert(entries.back().time < O.time);
     }
 
@@ -11,15 +13,18 @@ void OrderBookEntry::addOrder(Order& O) {
     total_qty += O.remaining_quantity;
 }
 
-Order& OrderBookEntry::getFront() {
+Order &OrderBookEntry::getFront()
+{
     return entries.front();
 }
 
-void OrderBookEntry::removeFront() {
+void OrderBookEntry::removeFront()
+{
     total_qty -= getFront().remaining_quantity;
     entries.pop_front();
 }
 
-int OrderBookEntry::size() {
+int OrderBookEntry::size()
+{
     return entries.size();
 }
