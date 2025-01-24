@@ -8,16 +8,16 @@
 
 using namespace std;
 
-int Order::global_count = 0;
+unsigned int Order::global_count = 0;
 
-string Order::order_to_string()
+string Order::order_to_string() const
 {
     stringstream ss;
     ss << "#" << time << ": " << od_to_string(direction) << " " << stock_name << ": " << remaining_quantity << " @ " << price << ", from " << client_id;
     return ss.str();
 }
 
-Order::Order(string cid, string s, Price p, int q, OrderDirection d)
+Order::Order(const string cid, const string s, Price p, size_t q, OrderDirection d)
     : time(++Order::global_count), client_id(cid), stock_name(s), price(p), quantity(q), direction(d), remaining_quantity(q)
 {
     cout << order_to_string() << endl;

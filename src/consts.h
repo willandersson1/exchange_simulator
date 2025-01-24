@@ -4,7 +4,7 @@
 
 using namespace std;
 
-typedef int Price;
+typedef unsigned int Price;
 
 enum class OrderDirection
 {

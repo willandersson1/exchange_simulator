@@ -24,7 +24,7 @@ void OrderBookEntry::removeFront()
     entries.pop_front();
 }
 
-int OrderBookEntry::size()
+const size_t OrderBookEntry::size() const
 {
     return entries.size();
 }

@@ -23,7 +23,7 @@ void OrderBook::submitOrder(Order &O)
         Price bestBidOrAsk = isBuy ? best_ask : best_bid;
         OrderBookEntry &entryMatchingTo = entriesToUse.at(bestBidOrAsk);
         Order &orderMatchingTo = entryMatchingTo.getFront();
-        int quantityToMatch = min(O.remaining_quantity, orderMatchingTo.remaining_quantity);
+        size_t quantityToMatch = min(O.remaining_quantity, orderMatchingTo.remaining_quantity);
 
         orderMatchingTo.remaining_quantity -= quantityToMatch;
         O.remaining_quantity -= quantityToMatch;
@@ -62,7 +62,7 @@ void OrderBook::updateBestBidAskFromOrder(Order &O)
         best_ask = min(best_ask, O.price);
 }
 
-bool OrderBook::shouldContinueMatching(Order &O)
+bool OrderBook::shouldContinueMatching(Order &O) const
 {
     if (O.direction == OrderDirection::BUY)
     {
@@ -118,7 +118,7 @@ void OrderBook::removeBestAskEntry()
     }
 }
 
-void OrderBook::displayBook()
+void OrderBook::displayBook() const
 {
     assert(best_bid < best_ask);
     cout << "Displaying book for " << stock_name << endl;

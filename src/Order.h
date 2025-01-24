@@ -8,16 +8,16 @@ using namespace std;
 class Order
 {
 public:
-    static int global_count;
-    int time;
-    string stock_name;
+    static unsigned int global_count;
+    unsigned int time;
+    const string stock_name;
     Price price;
-    int quantity;
+    size_t quantity;
     OrderDirection direction;
-    int remaining_quantity;
-    string client_id;
+    size_t remaining_quantity;
+    const string client_id;
 
     Order() : direction(OrderDirection::BUY) {};
-    Order(string cid, string s, Price p, int q, OrderDirection d);
-    string order_to_string();
+    Order(const string cid, const string s, Price p, size_t q, OrderDirection d);
+    string order_to_string() const;
 };
