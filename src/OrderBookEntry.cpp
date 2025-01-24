@@ -2,9 +2,9 @@
 #include "Order.h"
 #include <cassert>
 
-void OrderBookEntry::addOrder(Order &O)
+void OrderBookEntry::addOrder(const Order &O)
 {
-    if (entries.size() > 0)
+    if (!entries.empty())
     {
         assert(entries.back().time < O.time);
     }
@@ -24,7 +24,7 @@ void OrderBookEntry::removeFront()
     entries.pop_front();
 }
 
-const size_t OrderBookEntry::size() const
+size_t OrderBookEntry::size() const
 {
     return entries.size();
 }

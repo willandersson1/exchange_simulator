@@ -10,8 +10,8 @@ public:
     list<Order> entries;
 
     OrderBookEntry() : total_qty(0) {};
-    void addOrder(Order &O);
+    void addOrder(const Order &O);
     Order &getFront();
     void removeFront();
-    const size_t size() const;
+    size_t size() const;
 };

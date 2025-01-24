@@ -9,7 +9,7 @@
 class Exchange
 {
 public:
-    void place_order(Order O);
+    void place_order(const Order O);
 
 private:
     unordered_map<string, OrderBook> orderbooks;
